@@ -12,7 +12,19 @@ bool GameScene::init()
 	BackgroundLayer* backgroundLayer = BackgroundLayer::create();
 	addChild(backgroundLayer);
 
-	FishLayer* fishLayer = FishLayer::create();
-	MenuLayer* menuLayer = MenuLayer::create();
+	_fishLayer = FishLayer::create(this);
+	addChild(_fishLayer);
+	_menuLayer = MenuLayer::create();
+	addChild(_menuLayer);
+
 	return true;
+}
+
+FishLayer*GameScene::getFishLayer()
+{
+	return _fishLayer;
+}
+MenuLayer*GameScene::getMenuLayer()
+{
+	return _menuLayer;
 }

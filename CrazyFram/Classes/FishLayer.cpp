@@ -1,9 +1,11 @@
+#include "Fish.h"
+#include "GameScene.h"
 #include "FishLayer.h"
 
-FishLayer* FishLayer::create()
+FishLayer* FishLayer::create(GameScene* scene)
 {
 	FishLayer* layer = new FishLayer();
-	if (layer && layer->init())
+	if (layer && layer->init(scene))
 	{
 		layer->autorelease();
 		return layer;
@@ -12,12 +14,13 @@ FishLayer* FishLayer::create()
 	return nullptr;
 }
 
-bool FishLayer::init()
+bool FishLayer::init(GameScene* scene)
 {
-	if (!BaseLayer::init())
-	{
-		return false;
-	}
+	BaseLayer::init(scene);
+
+	// init fish pool
+	_fishPool.reserve(4);
+
 
 	this->_doEvent = std::bind(&FishLayer::doEvent, this);
 	this->_doUI = std::bind(&FishLayer::doUI, this);
@@ -30,7 +33,40 @@ void FishLayer::doEvent()
 {}
 
 void FishLayer::doUI()
-{}
+{
+	createFish();
+}
 
 void FishLayer::removeEvent()
+{}
+
+void FishLayer::createFish()
+{}
+
+void FishLayer::createFishWithSigine()
+{}
+
+void FishLayer::createFishWithMore()
+{}
+
+void FishLayer::createFishWithType()
+{}
+
+void FishLayer::removeFishSigine(Fish* fish)
+{}
+
+
+void FishLayer::checkOutCollision()
+{
+	bool falg = this->checkOutCollisionBetweenFishesAndBullet();
+	if (falg)
+	{
+		this->checkOutCollisionBetweenFishesAndFishingNet();
+	}
+}
+bool FishLayer::checkOutCollisionBetweenFishesAndBullet()
+{
+	return true;
+}
+void FishLayer::checkOutCollisionBetweenFishesAndFishingNet()
 {}
