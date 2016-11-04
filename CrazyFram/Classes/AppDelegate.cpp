@@ -1,5 +1,7 @@
+#include "Constants.h"
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "LoadingLayer.h"
+
 
 USING_NS_CC;
 
@@ -27,11 +29,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::createWithRect("HelloCpp", Rect(0, 0, 960, 640));
+        glview = GLViewImpl::createWithRect("HelloCpp", Rect(0, 0, 800, 480));
         director->setOpenGLView(glview);
     }
 
-    director->getOpenGLView()->setDesignResolutionSize(960, 640, ResolutionPolicy::SHOW_ALL);
+	director->getOpenGLView()->setDesignResolutionSize(800, 480, ResolutionPolicy::SHOW_ALL);
 
     // turn on display FPS
     director->setDisplayStats(true);
@@ -39,10 +41,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
-    FileUtils::getInstance()->addSearchPath("res");
+	initlaizeGameResource();
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+	auto scene = LoadingLayer::createScene();
 
     // run
     director->runWithScene(scene);
@@ -64,4 +66,16 @@ void AppDelegate::applicationWillEnterForeground() {
 
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+}
+void AppDelegate::initlaizeGameResource()
+{
+	std::vector<std::string>m_resourcePath;
+	int resSize = sizeof(GAME_RESOURCES_FOILDER) / sizeof(GAME_RESOURCES_FOILDER)[0];
+
+	for (int i = 0; i < resSize; i++)
+	{
+		m_resourcePath.push_back(GAME_RESOURCES_FOILDER[i]);
+	}
+	FileUtils::getInstance()->setSearchPaths(m_resourcePath);
+
 }
