@@ -1,7 +1,7 @@
 #ifndef __BASE__OBJECT__H__H__
 #define __BASE__OBJECT__H__H__
+#include "GameHelper.h"
 #include "cocos2d.h"
-
 class BaseObject :public cocos2d::Node
 {
 protected:

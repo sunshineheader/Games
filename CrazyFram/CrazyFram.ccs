@@ -3,8 +3,34 @@
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
-        <Image Name="HelloWorld.png" />
-        <Project Name="MainScene.csd" Type="Scene" />
+        <Folder Name="Game">
+          <Folder Name="Pic">
+            <Image Name="evemy_slot.png" />
+            <Image Name="gold_slot.png" />
+            <Image Name="turret_solt.png" />
+            <Image Name="playerLevel_Bg.png" />
+            <Image Name="exp_progress.png" />
+            <Image Name="box.png" />
+            <Image Name="boxPre.png" />
+            <Image Name="setBtn.png" />
+            <Image Name="setBtnSeclted.png" />
+            <Image Name="power.png" />
+            <Image Name="addBtn.png" />
+            <Image Name="addBtnSeclted.png" />
+            <Image Name="subBtn.png" />
+            <Image Name="subBtnSeclted.png" />
+            <Image Name="boomb.png" />
+            <Image Name="boombPre.png" />
+            <Image Name="redDot.png" />
+            <Image Name="buy_task.png" />
+            <Image Name="buyBtn.png" />
+            <Image Name="buyBtnPre.png" />
+            <Image Name="boombBullet.png" />
+            <Image Name="golds.png" />
+          </Folder>
+          <PlistInfo Name="Game.csi" Type="Plist" />
+          <Project Name="MenuLayer.csd" Type="Layer" />
+        </Folder>
       </RootFolder>
     </Group>
   </SolutionFolder>

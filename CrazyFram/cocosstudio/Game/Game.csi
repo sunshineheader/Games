@@ -1,0 +1,30 @@
+<PlistInfoProjectFile>
+  <PropertyGroup Name="Game" Type="Plist" ID="d4006cfe-002d-4e0c-9a05-4103190ae154" Version="3.10.0.0" />
+  <Content ExportType="Png" SortAlgorithm="MaxRects" PicturePadding="1" AllowRotation="True" AllowAnySize="True" AllowTrim="True" ctype="PlistInfoData">
+    <ImageFiles>
+      <FilePathData Path="Game/Pic/evemy_slot.png" />
+      <FilePathData Path="Game/Pic/gold_slot.png" />
+      <FilePathData Path="Game/Pic/turret_solt.png" />
+      <FilePathData Path="Game/Pic/playerLevel_Bg.png" />
+      <FilePathData Path="Game/Pic/exp_progress.png" />
+      <FilePathData Path="Game/Pic/box.png" />
+      <FilePathData Path="Game/Pic/boxPre.png" />
+      <FilePathData Path="Game/Pic/setBtn.png" />
+      <FilePathData Path="Game/Pic/setBtnSeclted.png" />
+      <FilePathData Path="Game/Pic/power.png" />
+      <FilePathData Path="Game/Pic/addBtnSeclted.png" />
+      <FilePathData Path="Game/Pic/subBtn.png" />
+      <FilePathData Path="Game/Pic/subBtnSeclted.png" />
+      <FilePathData Path="Game/Pic/addBtn.png" />
+      <FilePathData Path="Game/Pic/boomb.png" />
+      <FilePathData Path="Game/Pic/boombPre.png" />
+      <FilePathData Path="Game/Pic/redDot.png" />
+      <FilePathData Path="Game/Pic/buy_task.png" />
+      <FilePathData Path="Game/Pic/buyBtn.png" />
+      <FilePathData Path="Game/Pic/buyBtnPre.png" />
+      <FilePathData Path="Game/Pic/boombBullet.png" />
+      <FilePathData Path="Game/Pic/golds.png" />
+    </ImageFiles>
+    <MaxSize Width="1024" Height="1024" />
+  </Content>
+</PlistInfoProjectFile>

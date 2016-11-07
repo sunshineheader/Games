@@ -14,7 +14,7 @@ bool GameScene::init()
 
 	_fishLayer = FishLayer::create(this);
 	addChild(_fishLayer);
-	_menuLayer = MenuLayer::create();
+	_menuLayer = MenuLayer::create(this);
 	addChild(_menuLayer);
 
 	return true;

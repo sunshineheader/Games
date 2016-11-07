@@ -6,13 +6,18 @@ using namespace std;
 
 const std::string GAME_RESOURCES_FOILDER[] = {
 	"res",
+	"res/Game",
 	"res/Loading",
-
+	"res/FishResource",
 };
 
 
 const std::string PLIST_RESOURCES[] = {
-	"res",
+	"MyFish",
+	"bullet",
+	"cannon",
+	"jinbi",
+	"net",
 };
 
 #endif//__CONSTANTS__H__H__
