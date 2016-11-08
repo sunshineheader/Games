@@ -23,7 +23,10 @@ private:
 	bool init(FishLayer* layer, NetType type);
 	void initObject();
 	void destoryObject();
-
+	cocos2d::Action* netAction();
+	void deleteMe();
+public:
+	cocos2d::Rect getCollisionRect();
 private:
 	FishLayer* _fishLayer;
 	cocos2d::Sprite* _netSprite;

@@ -21,6 +21,7 @@ private:
 private: // cannon 
 	void createCannon();
 	void changeCannon();
+	bool checkCoin();
 	void cannonAimAt(cocos2d::Vec2 location);
 	void createBullet(cocos2d::Vec2 position, int type);
 	void createLighting(cocos2d::Vec2 position);
@@ -34,6 +35,7 @@ private: // callbacks
 	void bmbButtonCallback(cocos2d::Ref* sender); // Õ¨µ¯
 public:
 	void refreshUI();
+	void setTouchedEnable(bool enable);
 private:
 	Text* _levelText;
 	Text* _goldText;
@@ -42,6 +44,7 @@ private:
 	LoadingBar* _lightLoadingBar;
 private:
 	Cannon* _cannon;
+	bool _touchEnable;
 
 };
 

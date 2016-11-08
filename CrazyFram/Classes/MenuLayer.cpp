@@ -1,6 +1,20 @@
 #include "Cannon.h"
 #include "GameScene.h"
+#include "GameData.h"
 #include "InitLayerHeader.h"
+
+
+static CannonData cannontData[8]
+{
+	{ CannonType(0), 1 },
+	{ CannonType(1), 2 },
+	{ CannonType(2), 3 },
+	{ CannonType(3), 4 },
+	{ CannonType(4), 5 },
+	{ CannonType(5), 10 },
+	{ CannonType(6), 20 },
+	{ CannonType(7), 0 },
+};
 
 MenuLayer* MenuLayer::create(GameScene* scene)
 {
@@ -17,9 +31,12 @@ MenuLayer* MenuLayer::create(GameScene* scene)
 bool MenuLayer::init(GameScene* scene)
 {
 	BaseLayer::init(scene);
+
+	_touchEnable = true;
 	this->_doEvent = std::bind(&MenuLayer::doEvent, this);
 	this->_doUI = std::bind(&MenuLayer::doUI, this);
 	this->_removeEvent = std::bind(&MenuLayer::removeEvent, this);
+	const std::string name = UserDefault::getInstance()->getXMLFilePath();
 	return true;
 }
 
@@ -81,20 +98,32 @@ void MenuLayer::addTouchEvent()
 
 bool MenuLayer::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 {
-
-	log("onTouchBegan");
-	this->cannonAimAt(touch->getLocation());
+	if (_touchEnable)
+	{
+		if (_cannon->getType() == CannonType::CANNON_TYPE_07) 
+		{
+			this->createLighting(touch->getLocation());
+		}
+		else 
+		{
+			if (this->checkCoin()) 
+			{
+				this->cannonAimAt(touch->getLocation());
+			}
+			else
+			{
+				this->changeCannon();
+			}
+		}
+	}
 	return false;
 }
 
 void MenuLayer::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event)
-{
-	log("onTouchMoved");
-}
+{}
+
 void MenuLayer::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event)
-{
-	log("onTouchEnded");
-}
+{}
 
 void MenuLayer::removeTouchEvent()
 {
@@ -109,12 +138,43 @@ void MenuLayer::createCannon()
 	_cannon->setPosition(Vec2(400,20));
 	addChild(_cannon);
 }
+// 检查金币
+bool MenuLayer::checkCoin()
+{
+	// TOOD： 判断是否可以发射子弹
+	int coin = GameData::getInstance()->getPlayerGold();
+	if (coin == 0){
+		// TOOD： 奖励500金币
+		return false;
+	}else if (coin >= cannontData[_cannon->getType()].cannonPrice) {
+		coin = coin - cannontData[_cannon->getType()].cannonPrice;
+		GameData::getInstance()->setPlayerGold(coin);
+		GameData::getInstance()->savePlayerGold();
+		refreshUI();
+		return true;
+	}
+	return false;
+}
+// 改变炮塔
 void MenuLayer::changeCannon()
-{}
+{
+	int coin = GameData::getInstance()->getPlayerGold();
+	int type = _cannon->getType();
+	int prevType = type - 1;
+	if (prevType >= 0)
+	{
+		if (coin >= cannontData[prevType].cannonPrice){
+			_cannon->setType(CannonType(prevType));
+		}
+		else {
+			_cannon->setType(CannonType(prevType));
+			changeCannon();
+		}
+	}
+}
 
 void MenuLayer::cannonAimAt(cocos2d::Vec2 location)
 {
-	// TOOD： 判断是否可以发射子弹
 	cocos2d::Vec2 cannonPos = _cannon->getPosition();
 	_cannon->cannonAimat(location);
 	// TOOD： 是否是激光类型
@@ -125,6 +185,7 @@ void MenuLayer::cannonAimAt(cocos2d::Vec2 location)
 		this->createBullet(location, type);
 	}
 }
+
 void MenuLayer::createBullet(cocos2d::Vec2 position, int type)
 {
 	_GameScene->getFishLayer()->createBulletAt(position, type);
@@ -177,11 +238,24 @@ void MenuLayer::refreshUI()
 {
 	// TOOD：刷新逻辑
 	// 等级部分 
-
+	
 	// 每日任务部分
 	
 	// 炮塔部分
-	
+	int coin = GameData::getInstance()->getPlayerGold();
+	_goldText->setString(String::createWithFormat("%d", coin)->_string);
+
+    // light
+	float percent = 100.0f;
+	_lightLoadingBar->setPercent(percent);
+	if (percent == 100.0f)
+	{
+		_cannon->setType(CannonType::CANNON_TYPE_07);
+	}
 	// 高爆炸弹部分
-	// _cannon->setType(CannonType::CANNON_TYPE_07);
+}
+
+void MenuLayer::setTouchedEnable(bool enable)
+{
+	_touchEnable = enable;
 }

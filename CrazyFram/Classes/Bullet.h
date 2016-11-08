@@ -24,6 +24,9 @@ private:
 	void deleteMe();
 public:
 	void flyTo(cocos2d::Vec2 endedPos);
+	cocos2d::Vec2 getCollisionPoint();
+	BulletType getType(){ return _type; };
+
 private:
 	FishLayer* _fishLayer;
 	cocos2d::Sprite* _bulletSprite;

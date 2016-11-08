@@ -23,15 +23,16 @@ private:
 	void removeEvent();
 private: //  add fish
 	void createFish();
-	void createFishWithSigine();
-	void createFishWithMore();
-	void createFishWithType();
+	void createFishWithType(int type);
+	void createFishWithSigine(float delta);
+	void createFishWithMore(float delta);
+	void createFishWithFormation(float delta);	// ’Û–Õ
 private: // add porpos
-	void createFishWithProps();
+	void createFishWithProps(float delta);
 public: //  add bullet
 	void createBulletAt(cocos2d::Vec2 location, int type);
 	void createLightingAt(cocos2d::Vec2 location);
-	void createNetAt(cocos2d::Vec2 location);
+	void createNetAt(cocos2d::Vec2 location, int type);
 public:  //  remove object
 	void removeFishSigine(Fish* fish);
 	void removeBulletSigine(Bullet* bullet);
@@ -41,6 +42,7 @@ public: // refreshUI
 	void refreshUI();
 
 private: // check collision
+	void update(float delta);
 	void checkOutCollision();
 	bool checkOutCollisionBetweenFishesAndBullet();
 	void checkOutCollisionBetweenFishesAndFishingNet();
@@ -51,6 +53,16 @@ private: // object pool
 	cocos2d::Vector<Net*>_netPool;
 private:
 	static FishInfo _staicFishData[12];
+
+
+
+
+
+	///////// MYTest ///////
+private:
+
+
+
 
 };
 

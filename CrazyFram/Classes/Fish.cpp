@@ -1,4 +1,6 @@
 #include "FishLayer.h"
+#include "CircleBy.h"
+#include "CurveBy.h"
 #include "Fish.h"
 using namespace cocos2d;
 
@@ -7,32 +9,29 @@ char*Fish::FISH_RESOURCES = "FishResource/Pic/0%d/%d_%d.png";
 DirPath Fish::_DirPath[20] =
 {
 	// ÓÒÉÏ½Ç
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	
+	{ Vec2(+900, +800), Vec2(-180, -108) },
+	{ Vec2(+900, +720), Vec2(-200, +100) },
+	{ Vec2(+900, +500), Vec2(-200, -100) },
+	{ Vec2(+900, +400), Vec2(+200, -100) },
+	{ Vec2(+900, +300), Vec2(-200, +100) },
 	// ×óÉÏ½Ç
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-
-	// ÓÒÏÂ½Ç
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	
+	{ Vec2(-100, 750), Vec2(900, -100) },
+	{ Vec2(-100, 800), Vec2(900, -180) },
+	{ Vec2(-100, 720), Vec2(900, -108) },
+	{ Vec2(-100, 600), Vec2(900, -120) },
+	{ Vec2(-100, 580), Vec2(900, -80)  },
 	// ×óÏÂ½Ç
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
-	{ Vec2(-100, 0), Vec2(900, 600) },
+	{ Vec2(-180, -108), Vec2(+900, +800) },
+	{ Vec2(-200, +100), Vec2(+900, +720) },
+	{ Vec2(-200, -100), Vec2(+900, +500) },
+	{ Vec2(+200, -100), Vec2(+900, +400) },
+	{ Vec2(-200, +100), Vec2(+900, +300) },
+	// ÓÒÏÂ½Ç
+	{ Vec2(+900, +800), Vec2(-180, -108) },
+	{ Vec2(+900, +720), Vec2(-200, +100) },
+	{ Vec2(+900, +500), Vec2(-200, -100) },
+	{ Vec2(+900, +400), Vec2(+200, -100) },
+	{ Vec2(+900, +300), Vec2(-200, +100) },
 };
 
 
@@ -66,15 +65,20 @@ void Fish::initObject()
 {
 	const std::string fishName = String::createWithFormat(FISH_RESOURCES, _fishInfo.fishType, _fishInfo.fishType, 0)->_string;
 	_fishSprite = cocos2d::Sprite::createWithSpriteFrameName(fishName);
-	setContentSize(_fishSprite->getContentSize());
 	addChild(_fishSprite);
+	//setAnchorPoint(Vec2(0.5f,0.5f));
+	//_fishSprite->setAnchorPoint(this->getAnchorPoint());
+	setContentSize(_fishSprite->getContentSize());
 	this->playSwingAnimation();
+	//dtawFishRect();
 }
 
 void Fish::destoryObject()
 {
 	this->stopAllActions();
 }
+void Fish::resetMe()
+{}
 
 void Fish::deleteMe()
 {
@@ -121,19 +125,20 @@ void Fish::playDeadAnimation()
 
 void Fish::move()
 {
-	unsigned int randomType = cocos2d::random() % 4;
+	int maxType = 2;
+	unsigned int randomType = cocos2d::random() % maxType;
 	if (randomType == 0){
 		moveWithDirPath();
 	}
 	else if (randomType == 1){
 		moveWithAutoPath();
 	}
-	else if (randomType == 2){
-		moveWithCirclePath();
-	}
-	else if (randomType == 3){
-		moveWithBezierPath();
-	}
+	//else if (randomType == 2){
+	//	moveWithCirclePath();
+	//}
+	//else if (randomType == 3){
+	//	moveWithBezierPath();
+	//}
 }
 
 void Fish::moveWithDirPath()
@@ -170,27 +175,71 @@ void Fish::moveWithAutoPath()
 }
 
 void Fish::moveWithCirclePath()
-{}
+{
+	CircleBy* circle = CircleBy::create(Vec2(200,240), 10, 45, 1, true);
+	this->runAction(circle);
+}
 void Fish::moveWithBezierPath()
-{}
+{
+	ccQuadBezierConfig bezier1;
+	bezier1.controlPoint = Vec2(100, 200);
+	bezier1.endPosition = Vec2(300, 0);
+	auto action = CurveBy::create(10, bezier1);
+	this->runAction(action);
+}
 
 void Fish::moveWithStraight(cocos2d::Vec2 startPos, cocos2d::Vec2 endedPos)
 {
+	// ÖØÖÃ½Ç¶È
+	float angle = GameHelper::getAngle(startPos, endedPos);
+	if ((0.0f > angle) && (angle >= -360.0f))
+	{
+		_fishSprite->setFlippedX(true);
+	}
+	this->setRotation(angle);
+	this->setPosition(startPos);
 	float distance = startPos.getDistance(endedPos);
-	float duration = distance / 100.0f;
+	float duration = (distance / _fishInfo.fishSpeed);
 	auto move = MoveTo::create(duration, endedPos);
 	CallFunc* callFunc = CallFunc::create(CC_CALLBACK_0(Fish::deleteMe, this));
 	Sequence* sequence = Sequence::create(move, callFunc, nullptr);
 	runAction(sequence);
 }
 
+void Fish::moveWithCircle(float duraction, cocos2d::Vec2 circleCenter, float radius, float angle)
+{
+}
+void Fish::moveWithBezier()
+{
+}
+
+
 int Fish::getExpByType()
 {
-	return 0;
+	return _fishInfo.fishExp;
 }
 int Fish::getGoldByType()
 {
-	return 0;
+	return _fishInfo.fishGold;
+}
+cocos2d::Sprite*Fish::getFishSprite()
+{
+	return _fishSprite;
 }
 
+cocos2d::Rect Fish::getCollisionRect()
+{
+	Vec2 origin = this->getBoundingBox().origin;
+	Rect rect(0, 0, _contentSize.width * 0.5, _contentSize.height*0.5);
+	return RectApplyAffineTransform(rect, this->getNodeToParentAffineTransform());
+}
+//void Fish::dtawFishRect()
+//{
+//	Rect box = this->getCollisionRect();
+//	Rect box2 = box;
+//	DrawNode* draw = DrawNode::create();
+//	draw->setAnchorPoint(this->getAnchorPoint());
+//	draw->drawRect(Vec2(box2.origin.x, box2.origin.y), Vec2(box2.size.width, box2.size.height), Color4F::RED);
+//	addChild(draw);
+//}
 

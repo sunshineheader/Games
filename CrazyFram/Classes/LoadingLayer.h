@@ -12,6 +12,7 @@ private:
 	void doEvent();
 	void doUI();
 	void removeEvent();
+	void initGameSetting();
 	// 实现异步加载
 	void loadGameResourcesAsynchronous(cocos2d::Texture2D* texture);
 private:

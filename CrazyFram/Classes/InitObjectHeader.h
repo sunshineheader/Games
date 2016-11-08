@@ -4,4 +4,5 @@
 #include "Cannon.h"
 #include "Bullet.h"
 #include "Net.h"
+#include "Gold.h"
 #endif

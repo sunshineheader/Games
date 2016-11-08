@@ -57,6 +57,11 @@ void Bullet::flyTo(cocos2d::Vec2 targetInWorldSpace)
 	this->runAction(sequence);
 }
 
+cocos2d::Vec2 Bullet::getCollisionPoint()
+{
+	return this->getParent()->convertToWorldSpace(this->getPosition());
+}
+
 void Bullet::deleteMe()
 {
 	_fishLayer->removeBulletSigine(this);

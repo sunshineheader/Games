@@ -13,6 +13,12 @@ enum CannonType
 	CANNON_TYPE_06,
 	CANNON_TYPE_07 // Lightting 
 };
+typedef struct
+{
+	CannonType cannonType;
+	float cannonPrice;
+}CannonData;
+
 
 class MenuLayer;
 class Cannon :public BaseObject

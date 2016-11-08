@@ -49,6 +49,7 @@ void Cannon::destoryObject()
 
 void Cannon::cahngeCannonSpriteByType()
 {
+
 	if (_type == CannonType::CANNON_TYPE_07) {
 		const std::string cannonName = "actor_cannon_jiguang_01.png";
 		_cannonSprite->setSpriteFrame(cannonName);
@@ -56,11 +57,14 @@ void Cannon::cahngeCannonSpriteByType()
 		const std::string cannonName = String::createWithFormat("actor_cannon1_%d1.png", _type + 1)->_string;
 		_cannonSprite->setSpriteFrame(cannonName);
 	}
+
+	_menuLayer->setTouchedEnable(true);
 }
 
 void Cannon::setType(CannonType type)
 {
 	_type = type;
+	_menuLayer->setTouchedEnable(false);
 	cahngeCannonSpriteByType();
 }
 

@@ -61,11 +61,12 @@ private:
 	bool init(FishLayer* layer, FishInfo info);
 	void initObject();
 	void destoryObject();
+	void resetMe();
 	void deleteMe();
-private:
+public:
 	void playSwingAnimation();
 	void playDeadAnimation();
-private:
+public:
 	void move();
 	void moveWithDirPath();
 	void moveWithAutoPath();
@@ -73,9 +74,17 @@ private:
 	void moveWithBezierPath();
 private:
 	void moveWithStraight(cocos2d::Vec2 startPos, cocos2d::Vec2 endedPos);
+	void moveWithCircle(float duraction, cocos2d::Vec2 circleCenter, float radius,float angle);
+	void moveWithBezier();
+
 public: // set get
 	int getExpByType();
 	int getGoldByType();
+public:
+	cocos2d::Sprite*getFishSprite();
+	cocos2d::Rect getCollisionRect();
+private: //////////// TESTING MENGTHON
+	//void dtawFishRect();
 private:
 	FishLayer*_fishLayer;
 	cocos2d::Sprite*_fishSprite;

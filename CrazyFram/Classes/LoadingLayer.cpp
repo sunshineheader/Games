@@ -29,10 +29,10 @@ bool LoadingLayer::init()
 		return false;
 	}
 
+	initGameSetting();
 	this->_doEvent = std::bind(&LoadingLayer::doEvent, this);
 	this->_doUI = std::bind(&LoadingLayer::doUI, this);
 	this->_removeEvent = std::bind(&LoadingLayer::removeEvent, this);
-
 	return true;
 }
 
@@ -58,6 +58,10 @@ void LoadingLayer::doUI()
 
 void LoadingLayer::removeEvent()
 {}
+
+void LoadingLayer::initGameSetting()
+{
+}
 
 void LoadingLayer::loadGameResourcesAsynchronous(cocos2d::Texture2D* texture)
 {
