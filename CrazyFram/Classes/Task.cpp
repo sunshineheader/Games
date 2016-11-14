@@ -2,6 +2,16 @@
 #include "Task.h"
 using namespace cocos2d;
 
+TaskData Task::_taskData[6] =
+{
+	{ FishType(0), 10, 0, 200 },
+	{ FishType(2), 5, 0,  200 },
+	{ FishType(4), 5, 0,  200 },
+	{ FishType(5), 5, 0,  300 },
+	{ FishType(7), 3, 0,  300 },
+	{ FishType(9), 3, 0,  300 }
+};
+
 Task*Task::create(MenuLayer* layer)
 {
 	Task* task = new Task();
@@ -29,13 +39,17 @@ bool Task::init(MenuLayer* layer)
 void Task::initObject()
 {
 	_taskHasFinisheed = false;
+	const std::string RESOURCE_NAME = "Task.csb";
+	auto rootNode = CSLoader::createNode(RESOURCE_NAME);
+	addChild(rootNode);
+
+
 
 }
 
 void Task::destoryObject()
 {
-	if (_taskHasFinisheed)
-	{
+	if (_taskHasFinisheed) {
 		_menuLayer->refreshUI();
 	}
 }

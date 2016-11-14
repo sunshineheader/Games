@@ -28,10 +28,15 @@
     <Item Key="TabsParamsKey">
       <Value ctype="TabsInfo">
         <OpenedDocuments>
-          <FilePathData Path="Game/Game.csi" />
           <FilePathData Path="Game/MenuLayer.csd" />
+          <FilePathData Path="Game/PaymentLayer.csd" />
+          <FilePathData Path="Game/SettingLayer.csd" />
+          <FilePathData Path="Game/PayType00.csd" />
+          <FilePathData Path="Game/PayType01.csd" />
+          <FilePathData Path="Game/Task.csd" />
+          <FilePathData Path="Game/Game.csi" />
         </OpenedDocuments>
-        <ActiveDocument Path="Game/MenuLayer.csd" />
+        <ActiveDocument Path="Game/SettingLayer.csd" />
       </Value>
     </Item>
   </Properties>

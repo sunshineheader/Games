@@ -84,6 +84,7 @@ private:
 	void moveWithStraight(bool direction, cocos2d::Vec2 startPos, cocos2d::Vec2 endedPos);
 	void moveWithBezier(bool direction, cocos2d::Vec2 startPos, cocos2d::Vec2  controlPoint1, cocos2d::Vec2  controlPoint2, cocos2d::Vec2 endedPos, float time);
 public: // set get
+	int getType();
 	int getExpByType();
 	int getGoldByType();
 public:

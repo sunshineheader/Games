@@ -282,6 +282,11 @@ void Fish::moveWithBezier(bool direction, cocos2d::Vec2 startPos, cocos2d::Vec2 
 	this->runAction(rotate);
 }
 
+int Fish::getType()
+{
+	return _fishInfo.fishType;
+}
+
 int Fish::getExpByType()
 {
 	return _fishInfo.fishExp;

@@ -24,6 +24,26 @@
       <FilePathData Path="Game/Pic/buyBtnPre.png" />
       <FilePathData Path="Game/Pic/boombBullet.png" />
       <FilePathData Path="Game/Pic/golds.png" />
+      <FilePathData Path="Game/Pic/boomb_title.png" />
+      <FilePathData Path="Game/Pic/buyBtnAtOnce.png" />
+      <FilePathData Path="Game/Pic/buyBtnAtOncePre.png" />
+      <FilePathData Path="Game/Pic/close.png" />
+      <FilePathData Path="Game/Pic/closeBtnPre.png" />
+      <FilePathData Path="Game/Pic/daoju_title.png" />
+      <FilePathData Path="Game/Pic/gold_.png" />
+      <FilePathData Path="Game/Pic/gold_title.png" />
+      <FilePathData Path="Game/Pic/hotline1.png" />
+      <FilePathData Path="Game/Pic/hotline2.png" />
+      <FilePathData Path="Game/Pic/sngle_background.png" />
+      <FilePathData Path="Game/Pic/twoPanel.png" />
+      <FilePathData Path="Game/Pic/fish_icon_0.png" />
+      <FilePathData Path="Game/Pic/fish_icon_2.png" />
+      <FilePathData Path="Game/Pic/fish_icon_4.png" />
+      <FilePathData Path="Game/Pic/fish_icon_5.png" />
+      <FilePathData Path="Game/Pic/fish_icon_7.png" />
+      <FilePathData Path="Game/Pic/fish_icon_9.png" />
+      <FilePathData Path="Game/Pic/fishBg.png" />
+      <FilePathData Path="Game/Pic/fishTaskBg.png" />
     </ImageFiles>
     <MaxSize Width="1024" Height="1024" />
   </Content>

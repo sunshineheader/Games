@@ -6,4 +6,7 @@
 #include "Net.h"
 #include "Gold.h"
 #include "Lightting.h"
+#include "Bloomb.h"
+
+#include "Task.h"
 #endif

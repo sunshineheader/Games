@@ -42,6 +42,7 @@ public:  //  remove object
 	void removeFishSigine(Fish* fish);
 	void removeBulletSigine(Bullet* bullet);
 	void removeNetSigine(Net* net);
+	void removeFishWithBloomb();
 public: // refreshUI
 	void refreshUI();
 
@@ -50,13 +51,13 @@ private: // check collision
 	void checkOutCollision();
 	bool checkOutCollisionBetweenFishesAndBullet();
 	void checkOutCollisionBetweenFishesAndFishingNet();
+	void fishWillBeCatched(Fish* fish, Net* net);
 private: // object pool
 	cocos2d::Vector<Fish*>_fishPool;
 	cocos2d::Vector<Bullet*>_bulletPool;
 	cocos2d::Vector<Net*>_netPool;
 private:
 	static FishInfo _staicFishData[12];
-
 private:
 	int _randFishType;
 	int _randFishWayType;

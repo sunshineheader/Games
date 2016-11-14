@@ -11,6 +11,7 @@ private:
 	void doEvent();
 	void doUI();
 	void removeEvent();
+	void panelClickCallBack(cocos2d::Ref* ref);
 };
 
 #endif

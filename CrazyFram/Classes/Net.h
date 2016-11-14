@@ -27,6 +27,7 @@ private:
 	void deleteMe();
 public:
 	cocos2d::Rect getCollisionRect();
+	int getType();
 private:
 	FishLayer* _fishLayer;
 	cocos2d::Sprite* _netSprite;

@@ -1,3 +1,4 @@
+#include "CrazyFram.h"
 #include "GameScene.h"
 #include "InitObjectHeader.h"
 #include "InitLayerHeader.h"
@@ -65,7 +66,6 @@ void FishLayer::createFish()
 	schedule(schedule_selector(FishLayer::createFishSigine),    1.0f, CC_REPEAT_FOREVER, 0.0f);
 	schedule(schedule_selector(FishLayer::createFishFormation), 20.0f, CC_REPEAT_FOREVER, 0.0f);
 	schedule(schedule_selector(FishLayer::createFishProps), 30.0f, CC_REPEAT_FOREVER, 0.0f);
-
 }
 
 void FishLayer::createFishByType(int type)
@@ -101,7 +101,6 @@ void FishLayer::createFishProps(float delta)
 		this->createFishByType(11);
 	}
 }
-
 
 void FishLayer::createFishFormation(float delta)
 {
@@ -171,6 +170,16 @@ void FishLayer::removeNetSigine(Net* net)
 	_netPool.eraseObject(net);
 	net->removeFromParentAndCleanup(true);
 }
+void FishLayer::removeFishWithBloomb()
+{
+	for (auto iterFish = _fishPool.begin(); iterFish != _fishPool.end(); iterFish++) {
+		Fish* fish = (Fish*)(*iterFish);
+		fish->playDeadAnimation();
+		Bloomb* bob = Bloomb::create(this, fish->getPosition());
+		addChild(bob);
+		_GameScene->getMenuLayer()->createGoldAt(false, fish->getPosition());
+	}
+}
 
 void FishLayer::refreshUI()
 {
@@ -214,10 +223,30 @@ void FishLayer::checkOutCollisionBetweenFishesAndFishingNet()
 			for (auto iterFish = _fishPool.begin(); iterFish != _fishPool.end(); iterFish++) {
 				Fish* fish = (Fish*)(*iterFish);
 				if (!fish->isCatched() && fish->getCollisionRect().intersectsRect(net->getCollisionRect())){
-					fish->playDeadAnimation();
-					_GameScene->getMenuLayer()->createGoldAt(false, fish->getPosition());
+					this->fishWillBeCatched(fish, net);
 				}
 			}
 		}
+	}
+}
+
+void FishLayer::fishWillBeCatched(Fish* fish, Net* net)
+{
+	if (fish->getType() == FishType::FISH_TYPE_10) {
+		fish->playDeadAnimation();
+		PaymentLayer* layer = PaymentLayer::create(_GameScene, PayType(1));
+		_GameScene->addChild(layer);
+	}
+	else if (fish->getType() == FishType::FISH_TYPE_11) {
+		fish->playDeadAnimation();
+		PaymentLayer* layer = PaymentLayer::create(_GameScene, PayType(3));
+		_GameScene->addChild(layer);
+	}
+	else {
+		if (GetFishHitRate(net->getType(), fish->getGoldByType())>= cocos2d::rand_0_1())
+		{
+			fish->playDeadAnimation();
+			_GameScene->getMenuLayer()->createGoldAt(false, fish->getPosition());
+		} 
 	}
 }

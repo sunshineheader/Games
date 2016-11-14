@@ -64,3 +64,7 @@ Rect Net::getCollisionRect()
 	CCSize size = CCSizeMake(defaultSize.width*scale, defaultSize.height*scale);
 	return CCRectMake(origin.x - size.width*0.5, origin.y - size.height*0.5, size.width, size.height);
 }
+int Net::getType()
+{
+	return int(_type);
+}

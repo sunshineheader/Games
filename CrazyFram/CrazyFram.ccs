@@ -5,31 +5,56 @@
       <RootFolder Name=".">
         <Folder Name="Game">
           <Folder Name="Pic">
-            <Image Name="evemy_slot.png" />
-            <Image Name="gold_slot.png" />
-            <Image Name="turret_solt.png" />
-            <Image Name="playerLevel_Bg.png" />
-            <Image Name="exp_progress.png" />
-            <Image Name="box.png" />
-            <Image Name="boxPre.png" />
-            <Image Name="setBtn.png" />
-            <Image Name="setBtnSeclted.png" />
-            <Image Name="power.png" />
             <Image Name="addBtn.png" />
             <Image Name="addBtnSeclted.png" />
-            <Image Name="subBtn.png" />
-            <Image Name="subBtnSeclted.png" />
             <Image Name="boomb.png" />
+            <Image Name="boomb_title.png" />
+            <Image Name="boombBullet.png" />
             <Image Name="boombPre.png" />
-            <Image Name="redDot.png" />
+            <Image Name="box.png" />
+            <Image Name="boxPre.png" />
             <Image Name="buy_task.png" />
             <Image Name="buyBtn.png" />
+            <Image Name="buyBtnAtOnce.png" />
+            <Image Name="buyBtnAtOncePre.png" />
             <Image Name="buyBtnPre.png" />
-            <Image Name="boombBullet.png" />
+            <Image Name="close.png" />
+            <Image Name="closeBtnPre.png" />
+            <Image Name="daoju_title.png" />
+            <Image Name="evemy_slot.png" />
+            <Image Name="exp_progress.png" />
+            <Image Name="fish_icon_0.png" />
+            <Image Name="fish_icon_2.png" />
+            <Image Name="fish_icon_4.png" />
+            <Image Name="fish_icon_5.png" />
+            <Image Name="fish_icon_7.png" />
+            <Image Name="fish_icon_9.png" />
+            <Image Name="fishBg.png" />
+            <Image Name="fishTaskBg.png" />
+            <Image Name="gold_.png" />
+            <Image Name="gold_slot.png" />
+            <Image Name="gold_title.png" />
             <Image Name="golds.png" />
+            <Image Name="hotline1.png" />
+            <Image Name="hotline2.png" />
+            <Image Name="playerLevel_Bg.png" />
+            <Image Name="power.png" />
+            <Image Name="redDot.png" />
+            <Image Name="setBtn.png" />
+            <Image Name="setBtnSeclted.png" />
+            <Image Name="sngle_background.png" />
+            <Image Name="subBtn.png" />
+            <Image Name="subBtnSeclted.png" />
+            <Image Name="turret_solt.png" />
+            <Image Name="twoPanel.png" />
           </Folder>
           <PlistInfo Name="Game.csi" Type="Plist" />
           <Project Name="MenuLayer.csd" Type="Layer" />
+          <Project Name="PaymentLayer.csd" Type="Layer" />
+          <Project Name="PayType00.csd" Type="Node" />
+          <Project Name="PayType01.csd" Type="Node" />
+          <Project Name="SettingLayer.csd" Type="Layer" />
+          <Project Name="Task.csd" Type="Node" />
         </Folder>
       </RootFolder>
     </Group>

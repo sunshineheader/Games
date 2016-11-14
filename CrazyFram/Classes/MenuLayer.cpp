@@ -32,12 +32,10 @@ MenuLayer* MenuLayer::create(GameScene* scene)
 bool MenuLayer::init(GameScene* scene)
 {
 	BaseLayer::init(scene);
-
 	_touchEnable = true;
 	this->_doEvent = std::bind(&MenuLayer::doEvent, this);
 	this->_doUI = std::bind(&MenuLayer::doUI, this);
 	this->_removeEvent = std::bind(&MenuLayer::removeEvent, this);
-	const std::string name = UserDefault::getInstance()->getXMLFilePath();
 	return true;
 }
 
@@ -82,6 +80,9 @@ void MenuLayer::doUI()
 
 	createCannon();
 	addTouchEvent();
+	createTask(10);
+	// schedule(schedule_selector(MenuLayer::createTask), 180.0f, CC_REPEAT_FOREVER, 0.0f);
+
 	refreshUI();
 }
 
@@ -102,7 +103,6 @@ void MenuLayer::addTouchEvent()
 bool MenuLayer::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 {
 	if (_touchEnable) {
-
 		if (_cannon->getType() == CannonType::CANNON_TYPE_07) {
 			this->cannonAimAt(touch->getLocation());
 			this->createLighting(touch->getLocation());
@@ -129,14 +129,22 @@ void MenuLayer::removeTouchEvent()
 {
 	this->getEventDispatcher()->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
 }
+void MenuLayer::createTask(float delta) {
 
-
+	Task* task = Task::create(this);
+	task->setPosition(120, 360);
+	addChild(task);
+}
 void MenuLayer::createCannon()
 {
 	//TOOD：根据玩家的炮塔类型选择要创建的炮塔
-	_cannon = Cannon::create(this);
+	int cannonType = GameData::getInstance()->getCannonType();
+	_cannon = Cannon::create(this, CannonType(cannonType));
 	_cannon->setPosition(Vec2(400,20));
 	addChild(_cannon);
+	GameData::getInstance()->setCannonType(cannonType);
+	GameData::getInstance()->saveCannonType();
+
 }
 // 检查金币
 bool MenuLayer::checkCoin()
@@ -203,10 +211,16 @@ void MenuLayer::createLighting(cocos2d::Vec2 position)
 }
 
 void MenuLayer::buyButtonCallback(cocos2d::Ref* sender)
-{}
+{
+	PaymentLayer* payLayer = PaymentLayer::create(_GameScene, PayType(2));
+	_GameScene->addChild(payLayer, 10);
+}
 
 void MenuLayer::boxButtonCallback(cocos2d::Ref* sender)
-{}
+{
+	PaymentLayer* payLayer = PaymentLayer::create(_GameScene, PayType(1));
+	_GameScene->addChild(payLayer, 10);
+}
 
 void MenuLayer::addButtonCallback(cocos2d::Ref* sender)
 {
@@ -219,6 +233,8 @@ void MenuLayer::addButtonCallback(cocos2d::Ref* sender)
 		nextType = 0;
 		_cannon->setType(CannonType(nextType));
 	}
+	GameData::getInstance()->setCannonType(nextType);
+	GameData::getInstance()->saveCannonType();
 
 }
 void MenuLayer::subButtonCallback(cocos2d::Ref* sender)
@@ -233,11 +249,29 @@ void MenuLayer::subButtonCallback(cocos2d::Ref* sender)
 		prevType = 6;
 		_cannon->setType(CannonType(prevType));
 	}
+	GameData::getInstance()->setCannonType(prevType);
+	GameData::getInstance()->saveCannonType();
 }
 void MenuLayer::setButtonCallback(cocos2d::Ref* sender)
-{}
+{
+	SettingLayer* setting = SettingLayer::create(_GameScene);
+	_GameScene->addChild(setting);
+}
+
 void MenuLayer::bmbButtonCallback(cocos2d::Ref* sender)
-{}
+{
+	int boombs = GameData::getInstance()->getBoombs();
+	if (boombs > 0) {
+		boombs--;
+		GameData::getInstance()->setBoombs(boombs);
+		GameData::getInstance()->saveBoombs();
+		this->refreshUI();
+		_GameScene->getFishLayer()->removeFishWithBloomb();
+	} else {
+		PaymentLayer* payLayer = PaymentLayer::create(_GameScene, PayType(0));
+		_GameScene->addChild(payLayer, 10);
+	}
+}
 
 void MenuLayer::refreshUI()
 {
@@ -257,10 +291,8 @@ void MenuLayer::refreshUI()
 		GameData::getInstance()->savePlayerCurrcertLevel();
 	}
 	_levelText->setString(String::createWithFormat("%d", currcertLevel)->_string);
-	
 	const float precent = float((float)playerExp / (float)nextLevelNeedExp)*100.0f;
 	_levelLoadingBar->setPercent(precent);
-
 	// 每日任务部分
 
 	// 炮塔部分
@@ -278,6 +310,9 @@ void MenuLayer::refreshUI()
 		GameData::getInstance()->saveLightLevelExp();
 	}
 	// 高爆炸弹部分
+	int boombs = GameData::getInstance()->getBoombs();
+	_boombText->setString(String::createWithFormat("%d", boombs)->_string);
+
 }
 
 void MenuLayer::setTouchedEnable(bool enable)

@@ -19,6 +19,7 @@ private:
 	virtual void onTouchEnded(cocos2d::Touch*, cocos2d::Event*) override;
 	void removeTouchEvent();
 private: // cannon 
+	void createTask(float delta);
 	void createCannon();	// 创建的炮塔
 	bool checkCoin(); // 检查金币
 	void changeCannon();// 改变炮塔
