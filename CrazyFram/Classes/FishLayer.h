@@ -21,6 +21,18 @@ private:
 	void doEvent();
 	void doUI();
 	void removeEvent();
+private:
+	void createFish(); // 增加鱼的主入口
+	// 按照特定的类型创建鱼
+	void createFishByType(int type);
+	void createFishByPath(int type);
+	// 
+	void createFishSigine(float delta);
+	void createFishProps(float delta);
+
+	// 
+	void createFishFormation(float delta);
+	void createFishSigineFormation(float delta);
 
 public: //  add bullet
 	void createBulletAt(cocos2d::Vec2 location, int type);
@@ -45,12 +57,9 @@ private: // object pool
 private:
 	static FishInfo _staicFishData[12];
 
-
-
-
-
-	///////// MYTest ///////
 private:
+	int _randFishType;
+	int _randFishWayType;
 
 
 

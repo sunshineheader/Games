@@ -79,10 +79,10 @@ public:
 	void moveWithDirPath();
 	void moveWithAutoPath();
 	void moveWithBezierPath();
+	void moveWithBezierPathByPathType(int type);
 private:
 	void moveWithStraight(bool direction, cocos2d::Vec2 startPos, cocos2d::Vec2 endedPos);
 	void moveWithBezier(bool direction, cocos2d::Vec2 startPos, cocos2d::Vec2  controlPoint1, cocos2d::Vec2  controlPoint2, cocos2d::Vec2 endedPos, float time);
-	void moveWithBezierPathByPathType(int type);
 public: // set get
 	int getExpByType();
 	int getGoldByType();

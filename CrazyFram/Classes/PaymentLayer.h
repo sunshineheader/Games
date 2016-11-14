@@ -15,6 +15,8 @@ class PaymentLayer :public BaseLayer
 public:
 	static PaymentLayer* create(GameScene* scene,PayType type);
 	bool init(GameScene* scene, PayType type);
+	void refreshUI();
+
 private:
 	void doEvent();
 	void doUI();

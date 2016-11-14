@@ -31,22 +31,22 @@ CirclePath Fish::_CirclePath[10] =
 BezierPath Fish::_BezierPath[12] =
 {
 	// вСоб╫г ----->срио╫г
-	{ cocos2d::Vec2(-10, -6), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 480), cocos2d::Vec2(810, 486), 12 },
-	{ cocos2d::Vec2(-10, -6), cocos2d::Vec2(400, 480), cocos2d::Vec2(400,   0), cocos2d::Vec2(810, 486), 12 },
-	{ cocos2d::Vec2(-10, -6), cocos2d::Vec2(400,   0), cocos2d::Vec2(400, 480), cocos2d::Vec2(810, 486), 12 },
+	{ cocos2d::Vec2(-10, 50), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 480), cocos2d::Vec2(810, 430), 12 },
+	{ cocos2d::Vec2(-10, 50), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 0), cocos2d::Vec2(810, 430), 13 },
+	{ cocos2d::Vec2(-10, 50), cocos2d::Vec2(400, 0), cocos2d::Vec2(400, 480), cocos2d::Vec2(810, 430), 14 },
 	// вСио╫г ----->сроб╫г
-	{ cocos2d::Vec2(-10, 486), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 480), cocos2d::Vec2(810, -6), 12 },
-	{ cocos2d::Vec2(-10, 486), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 0), cocos2d::Vec2(810, -6), 12 },
-	{ cocos2d::Vec2(-10, 486), cocos2d::Vec2(400, 0), cocos2d::Vec2(400, 480), cocos2d::Vec2(810, -6), 12 },
+	{ cocos2d::Vec2(-10, 430), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 480), cocos2d::Vec2(810, 50), 12 },
+	{ cocos2d::Vec2(-10, 430), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 0), cocos2d::Vec2(810, 50), 13 },
+	{ cocos2d::Vec2(-10, 430), cocos2d::Vec2(400, 0), cocos2d::Vec2(400, 480), cocos2d::Vec2(810, 50), 14 },
 	// срио╫г ----->вСоб╫г
-	{ cocos2d::Vec2(810, 486), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 480), cocos2d::Vec2(-10, -6), 12 },
-	{ cocos2d::Vec2(810, 486), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 0), cocos2d::Vec2(-10, -6), 12 },
-	{ cocos2d::Vec2(810, 486), cocos2d::Vec2(400, 0), cocos2d::Vec2(400, 480), cocos2d::Vec2(-10, -6), 12 },
+	{ cocos2d::Vec2(810, 430), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 480), cocos2d::Vec2(-10, 50), 12 },
+	{ cocos2d::Vec2(810, 430), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 0), cocos2d::Vec2(-10, 50), 13 },
+	{ cocos2d::Vec2(810, 430), cocos2d::Vec2(400, 0), cocos2d::Vec2(400, 480), cocos2d::Vec2(-10, 50), 14 },
 
 	// сроб╫г ----->вСио╫г
-	{ cocos2d::Vec2(810, -6), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 480), cocos2d::Vec2(-10, 486), 12 },
-	{ cocos2d::Vec2(810, -6), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 0), cocos2d::Vec2(-10, 486), 12 },
-	{ cocos2d::Vec2(810, -6), cocos2d::Vec2(400, 0), cocos2d::Vec2(400, 480), cocos2d::Vec2(-10, 486), 12 },
+	{ cocos2d::Vec2(810, 50), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 480), cocos2d::Vec2(-10, 430), 12 },
+	{ cocos2d::Vec2(810, 50), cocos2d::Vec2(400, 480), cocos2d::Vec2(400, 0), cocos2d::Vec2(-10, 430), 13 },
+	{ cocos2d::Vec2(810, 50), cocos2d::Vec2(400, 0), cocos2d::Vec2(400, 480), cocos2d::Vec2(-10, 430), 14 },
 };
 
 
@@ -64,11 +64,9 @@ Fish* Fish::create(FishLayer* layer, FishInfo info)
 
 bool Fish::init(FishLayer* layer, FishInfo info)
 {
-	if (!BaseObject::init())
-	{
+	if (!BaseObject::init()) {
 		return false;
 	}
-
 	_fishLayer = layer;
 	_fishInfo = info;
 	_isCatched = false;
@@ -176,19 +174,17 @@ void Fish::playDeadAnimation()
 
 void Fish::move()
 {
-	moveWithBezierPath();
-
-	//int maxType = 3;
-	//unsigned int randomType = cocos2d::random() % maxType;
-	//if (randomType == 0){
-	//	moveWithDirPath();
-	//}
-	//else if (randomType == 1){
-	//	moveWithAutoPath();
-	//}
-	//else if (randomType == 2){
-	//	moveWithBezierPath();
-	//}
+	int maxType = 3;
+	unsigned int randomType = cocos2d::random() % maxType;
+	if (randomType == 0){
+		moveWithAutoPath();
+	}
+	else if (randomType == 1){
+		moveWithAutoPath();
+	}
+	else if (randomType == 2){
+		moveWithBezierPath();
+	}
 	//else if (randomType == 3){
 	//	moveWithCirclePath();
 	//}

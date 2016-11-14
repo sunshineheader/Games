@@ -52,10 +52,77 @@ void FishLayer::doEvent()
 	scheduleUpdate();
 }
 void FishLayer::doUI()
-{}
+{
+	createFish();
+}
 void FishLayer::removeEvent()
 {
 	unscheduleUpdate();
+}
+void FishLayer::createFish()
+{
+	// 每秒随机游动
+	schedule(schedule_selector(FishLayer::createFishSigine),    1.0f, CC_REPEAT_FOREVER, 0.0f);
+	schedule(schedule_selector(FishLayer::createFishFormation), 20.0f, CC_REPEAT_FOREVER, 0.0f);
+	schedule(schedule_selector(FishLayer::createFishProps), 30.0f, CC_REPEAT_FOREVER, 0.0f);
+
+}
+
+void FishLayer::createFishByType(int type)
+{
+	int randrate = cocos2d::rand_0_1() ;
+	if (randrate <= _staicFishData[type].fishRate)
+	{
+		FishInfo info = _staicFishData[type];
+		Fish *fish = Fish::create(this, info);
+		_fishPool.pushBack(fish);
+		addChild(fish);
+		fish->move(); // 随机游动
+	}
+}
+void FishLayer::createFishByPath(int type)
+{
+
+}
+
+void FishLayer::createFishSigine(float delta)
+{
+	int randtype = cocos2d::random() % 10; // 正常的鱼
+	this->createFishByType(randtype);
+}
+
+void FishLayer::createFishProps(float delta)
+{
+	bool isRedPaper = cocos2d::random() % 2 == 1;
+	if (isRedPaper) {
+		this->createFishByType(10);
+	}
+	else {
+		this->createFishByType(11);
+	}
+}
+
+
+void FishLayer::createFishFormation(float delta)
+{
+	int randnumber = cocos2d::random() % 10 + 2; // 正常的鱼
+	float randtime = cocos2d::rand_0_1() + 1.0f; 
+	_randFishType = cocos2d::random() % 5;
+	_randFishWayType = cocos2d::random() % 12;
+	schedule(schedule_selector(FishLayer::createFishSigineFormation), randtime, randnumber, 0.0f);
+}
+
+void  FishLayer::createFishSigineFormation(float delta)
+{
+	int randrate = cocos2d::rand_0_1();
+	if (randrate <= _staicFishData[_randFishType].fishRate)
+	{
+		FishInfo info = _staicFishData[_randFishType];
+		Fish *fish = Fish::create(this, info);
+		_fishPool.pushBack(fish);
+		addChild(fish);
+		fish->moveWithBezierPathByPathType(_randFishWayType); // 随机游动
+	}
 }
 
 void FishLayer::createBulletAt(cocos2d::Vec2 location, int type)
