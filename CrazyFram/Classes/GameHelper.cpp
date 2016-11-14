@@ -32,8 +32,12 @@ Node* GameHelper::seekNodeByName(Node* root, const std::string& name) {
 
 float GameHelper::getAngle(cocos2d::Vec2 stratPos, cocos2d::Vec2 endedPos)
 {
-	float distanceY = endedPos.y - stratPos.y;
-	float distanceX = endedPos.x - stratPos.x;
-	float radian = Vec2(distanceY, distanceX).getAngle();
-	return CC_RADIANS_TO_DEGREES(radian);
+	float tan = -(endedPos.y - stratPos.y) / (endedPos.x - stratPos.x);
+	float dreege = atan(tan);
+	dreege = dreege / M_PI*180.0f;
+	return dreege;
+	//float distanceY = endedPos.y - stratPos.y;
+	//float distanceX = endedPos.x - stratPos.x;
+	//float radian = Vec2(distanceY, distanceX).getAngle();
+	//return CC_RADIANS_TO_DEGREES(radian);
 }

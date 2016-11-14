@@ -29,13 +29,13 @@ private:
 	bool init(MenuLayer* layer, CannonType type);
 	void initObject();
 	void destoryObject();
+	void playCannonAnimation();
 private: // cannon sprite
 	void cahngeCannonSpriteByType();
 public:
 	void setType(CannonType type);
 	CannonType getType();
 	void cannonAimat(cocos2d::Vec2 location);
-
 private:
 	MenuLayer* _menuLayer;
 	cocos2d::Sprite* _cannonSprite;

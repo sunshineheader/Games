@@ -21,14 +21,7 @@ private:
 	void doEvent();
 	void doUI();
 	void removeEvent();
-private: //  add fish
-	void createFish();
-	void createFishWithType(int type);
-	void createFishWithSigine(float delta);
-	void createFishWithMore(float delta);
-	void createFishWithFormation(float delta);	// ’Û–Õ
-private: // add porpos
-	void createFishWithProps(float delta);
+
 public: //  add bullet
 	void createBulletAt(cocos2d::Vec2 location, int type);
 	void createLightingAt(cocos2d::Vec2 location);
@@ -37,7 +30,6 @@ public:  //  remove object
 	void removeFishSigine(Fish* fish);
 	void removeBulletSigine(Bullet* bullet);
 	void removeNetSigine(Net* net);
-
 public: // refreshUI
 	void refreshUI();
 
@@ -46,7 +38,6 @@ private: // check collision
 	void checkOutCollision();
 	bool checkOutCollisionBetweenFishesAndBullet();
 	void checkOutCollisionBetweenFishesAndFishingNet();
-
 private: // object pool
 	cocos2d::Vector<Fish*>_fishPool;
 	cocos2d::Vector<Bullet*>_bulletPool;

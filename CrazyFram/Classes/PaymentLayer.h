@@ -13,12 +13,14 @@ enum PayType
 class PaymentLayer :public BaseLayer
 {
 public:
-	static PaymentLayer* create(GameScene* scene);
-	bool init(GameScene* scene);
+	static PaymentLayer* create(GameScene* scene,PayType type);
+	bool init(GameScene* scene, PayType type);
 private:
 	void doEvent();
 	void doUI();
 	void removeEvent();
+private:
+	PayType _type;
 };
 
 #endif

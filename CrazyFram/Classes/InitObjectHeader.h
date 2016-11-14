@@ -5,4 +5,5 @@
 #include "Bullet.h"
 #include "Net.h"
 #include "Gold.h"
+#include "Lightting.h"
 #endif

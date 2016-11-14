@@ -3,18 +3,23 @@
 
 #include "BaseObject.h"
 
-class FishLayer;
+class MenuLayer;
 class Gold :public BaseObject
 {
 public:
-	static Gold* create(FishLayer* layer);
+	static Gold* create(MenuLayer* layer, cocos2d::Vec2 satrtPos, cocos2d::Vec2 endedPos);
 private:
-	bool init(FishLayer* layer);
+	bool init(MenuLayer* layer, cocos2d::Vec2 satrtPos, cocos2d::Vec2 endedPos);
 	void initObject();
 	void destoryObject();
-
+	cocos2d::Action* goldAnimation();
+	cocos2d::Action* goldAction();
+	void deleteMe();
 private:
-	FishLayer* _fishLayer;
+	MenuLayer* _fishLayer;
+	cocos2d::Sprite*_goldSprite;
+	cocos2d::Vec2 _satrtPos;
+	cocos2d::Vec2 _endedPos;
 };
 
 #endif

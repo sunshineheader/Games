@@ -47,8 +47,11 @@ void Bullet::destoryObject()
 void Bullet::flyTo(cocos2d::Vec2 targetInWorldSpace)
 {
 	cocos2d::Vec2 targetInNodeSpace = this->getParent()->convertToNodeSpace(targetInWorldSpace);
-	float angle = GameHelper::getAngle(this->getPosition(), targetInWorldSpace);
-	this->setRotation(angle);
+
+	float distanceY = targetInWorldSpace.y - this->getPosition().y;
+	float distanceX = targetInWorldSpace.x - this->getPosition().x;
+	float radian = Vec2(distanceY, distanceX).getAngle();
+	this->setRotation(CC_RADIANS_TO_DEGREES(radian));
 	float speed = 300.0f;
 	float duration = (this->getPosition().getDistance(targetInWorldSpace)) / speed;
 	cocos2d::CallFunc* callFunc = cocos2d::CallFunc::create(CC_CALLBACK_0(Bullet::deleteMe, this));

@@ -1,6 +1,7 @@
-#include "Cannon.h"
+#include "CrazyFram.h"
 #include "GameScene.h"
 #include "GameData.h"
+#include "InitObjectHeader.h"
 #include "InitLayerHeader.h"
 
 
@@ -52,6 +53,8 @@ void MenuLayer::doUI()
 	// 等级部分 
 	_levelText = static_cast<Text*>(GameHelper::seekNodeByName(rootNode,"level_text"));
 	_levelLoadingBar = static_cast<LoadingBar*>(GameHelper::seekNodeByName(rootNode, "level_loading_bar"));
+	
+	
 	// 每日任务部分
 	Button* buyBtn = static_cast<Button*>(GameHelper::seekNodeByName(rootNode, "buy_button"));
 	buyBtn->addClickEventListener(CC_CALLBACK_1(MenuLayer::buyButtonCallback, this));
@@ -98,20 +101,17 @@ void MenuLayer::addTouchEvent()
 
 bool MenuLayer::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 {
-	if (_touchEnable)
-	{
-		if (_cannon->getType() == CannonType::CANNON_TYPE_07) 
-		{
+	if (_touchEnable) {
+
+		if (_cannon->getType() == CannonType::CANNON_TYPE_07) {
+			this->cannonAimAt(touch->getLocation());
 			this->createLighting(touch->getLocation());
 		}
-		else 
-		{
-			if (this->checkCoin()) 
-			{
+		else {
+			if (this->checkCoin()) {
 				this->cannonAimAt(touch->getLocation());
 			}
-			else
-			{
+			else{
 				this->changeCannon();
 			}
 		}
@@ -145,7 +145,13 @@ bool MenuLayer::checkCoin()
 	int coin = GameData::getInstance()->getPlayerGold();
 	if (coin == 0){
 		// TOOD： 奖励500金币
+		coin = 500;
+		this->createGoldAt(true);
+		GameData::getInstance()->setPlayerGold(coin);
+		GameData::getInstance()->savePlayerGold();
+		refreshUI();
 		return false;
+
 	}else if (coin >= cannontData[_cannon->getType()].cannonPrice) {
 		coin = coin - cannontData[_cannon->getType()].cannonPrice;
 		GameData::getInstance()->setPlayerGold(coin);
@@ -229,28 +235,47 @@ void MenuLayer::subButtonCallback(cocos2d::Ref* sender)
 	}
 }
 void MenuLayer::setButtonCallback(cocos2d::Ref* sender)
-{
-}
+{}
 void MenuLayer::bmbButtonCallback(cocos2d::Ref* sender)
 {}
 
 void MenuLayer::refreshUI()
 {
-	// TOOD：刷新逻辑
 	// 等级部分 
+	// 当前的等级
+	int currcertLevel = GameData::getInstance()->getPlayerCurrcertLevel();
+	// 下一等级
+	int nextLevel = currcertLevel + 1;
+	int nextLevelNeedExp = GetExpByLevel(nextLevel);
+	int playerExp = GameData::getInstance()->getPlayerLevelExp();
+	if (playerExp >= nextLevelNeedExp) {
+		playerExp -= nextLevelNeedExp;
+		currcertLevel += 1;
+		GameData::getInstance()->setPlayerLevelExp(playerExp);
+		GameData::getInstance()->savePlayerLevelExp();
+		GameData::getInstance()->setPlayerCurrcertLevel(currcertLevel);
+		GameData::getInstance()->savePlayerCurrcertLevel();
+	}
+	_levelText->setString(String::createWithFormat("%d", currcertLevel)->_string);
 	
+	const float precent = float((float)playerExp / (float)nextLevelNeedExp)*100.0f;
+	_levelLoadingBar->setPercent(precent);
+
 	// 每日任务部分
-	
+
 	// 炮塔部分
 	int coin = GameData::getInstance()->getPlayerGold();
 	_goldText->setString(String::createWithFormat("%d", coin)->_string);
 
-    // light
-	float percent = 100.0f;
+	//// 激光
+	int light = GameData::getInstance()->getLightLevelExp();
+	float percent = (light* 100.0f / 100.0f);
 	_lightLoadingBar->setPercent(percent);
-	if (percent == 100.0f)
-	{
+	if (percent == 100.0f) {
 		_cannon->setType(CannonType::CANNON_TYPE_07);
+		_lightLoadingBar->setPercent(0);
+		GameData::getInstance()->setLightLevelExp(0);
+		GameData::getInstance()->saveLightLevelExp();
 	}
 	// 高爆炸弹部分
 }
@@ -258,4 +283,22 @@ void MenuLayer::refreshUI()
 void MenuLayer::setTouchedEnable(bool enable)
 {
 	_touchEnable = enable;
+}
+
+void MenuLayer::createGoldAt(bool isArray, cocos2d::Vec2 location)
+{
+	if (!isArray){
+		Gold* gold = Gold::create(this, this->convertToWorldSpace(location), Vec2(100, 28));
+		addChild(gold);
+	}
+	else{
+		Vec2 goldPos[7] = {
+			{ Vec2(320, 180) },{ Vec2(280, 180) },{ Vec2(240, 180) },{ Vec2(200, 180) },
+			{ Vec2(280, 140) },{ Vec2(240, 140) },{ Vec2(200, 140) }
+		};
+		for (int i = 0; i < 7; i++){
+			Gold* gold = Gold::create(this, goldPos[i], Vec2(100, 28));
+			addChild(gold);
+		}
+	}
 }

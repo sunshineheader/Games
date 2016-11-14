@@ -13,7 +13,9 @@ enum FishType
 	FISH_TYPE_06,
 	FISH_TYPE_07,
 	FISH_TYPE_08,
-	FISH_TYPE_09
+	FISH_TYPE_09,
+	FISH_TYPE_10,// red
+	FISH_TYPE_11 // prop
 };
 
 // 鱼的信息
@@ -24,6 +26,7 @@ typedef struct
 	int	     fishSpeed;           // 鱼的游动速度
 	float    fishRate;            // 鱼的出现几率
 	int      fishExp;             // 击杀鱼所得到的经验
+	int      fishLight;           // 击杀鱼所得的激光经验
 	int      fishSwingFrames;     // 鱼的游动动画帧数
 	int      fishDeadFrames;      // 鱼的死亡动画帧数
 }FishInfo;
@@ -50,6 +53,11 @@ typedef struct
 
 typedef struct 
 {
+	cocos2d::Vec2 startPosition;
+	cocos2d::Vec2 controlPoint1;
+	cocos2d::Vec2 controlPoint2;
+	cocos2d::Vec2 ebdedPosition;
+	float time;
 }BezierPath;
 
 class FishLayer;
@@ -70,26 +78,27 @@ public:
 	void move();
 	void moveWithDirPath();
 	void moveWithAutoPath();
-	void moveWithCirclePath();
 	void moveWithBezierPath();
 private:
-	void moveWithStraight(cocos2d::Vec2 startPos, cocos2d::Vec2 endedPos);
-	void moveWithCircle(float duraction, cocos2d::Vec2 circleCenter, float radius,float angle);
-	void moveWithBezier();
-
+	void moveWithStraight(bool direction, cocos2d::Vec2 startPos, cocos2d::Vec2 endedPos);
+	void moveWithBezier(bool direction, cocos2d::Vec2 startPos, cocos2d::Vec2  controlPoint1, cocos2d::Vec2  controlPoint2, cocos2d::Vec2 endedPos, float time);
+	void moveWithBezierPathByPathType(int type);
 public: // set get
 	int getExpByType();
 	int getGoldByType();
 public:
-	cocos2d::Sprite*getFishSprite();
+	bool isCatched(){ return _isCatched; };
+	void setCatched(bool mcatch){ _isCatched = mcatch; };
 	cocos2d::Rect getCollisionRect();
-private: //////////// TESTING MENGTHON
-	//void dtawFishRect();
+	//void moveWithBezier(cocos2d::Vec2 form, cocos2d::Vec2 to,float time,bool direction);
 private:
 	FishLayer*_fishLayer;
 	cocos2d::Sprite*_fishSprite;
+	bool _isCatched;
 private:
-	static DirPath _DirPath[20];
+	static DirPath _DirPath[10];
+	static CirclePath _CirclePath[10];
+	static BezierPath _BezierPath[12];
 	FishInfo _fishInfo;
 private:
 	static char* FISH_RESOURCES;

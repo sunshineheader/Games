@@ -58,5 +58,9 @@ cocos2d::Action* Net::netAction()
 Rect Net::getCollisionRect()
 {
 	// TOOD:·µ»ØÅö×²ÇøÓò
-	return Rect();
+	CCPoint origin = this->getParent()->convertToWorldSpace(this->getPosition());
+	CCSize defaultSize = _netSprite->getContentSize();
+	float scale = this->getScale();
+	CCSize size = CCSizeMake(defaultSize.width*scale, defaultSize.height*scale);
+	return CCRectMake(origin.x - size.width*0.5, origin.y - size.height*0.5, size.width, size.height);
 }
