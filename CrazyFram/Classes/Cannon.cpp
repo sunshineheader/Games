@@ -77,7 +77,6 @@ void Cannon::cannonAimat(cocos2d::Vec2 location)
 	float radian = Vec2(distanceY, distanceX).getAngle();
 	float angle = CC_RADIANS_TO_DEGREES(radian);
 	this->setRotation(angle);
-	this->playCannonAnimation();
 }
 void Cannon::playCannonAnimation()
 {

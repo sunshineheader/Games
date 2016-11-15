@@ -98,7 +98,6 @@ private:
 	bool _isCatched;
 private:
 	static DirPath _DirPath[10];
-	static CirclePath _CirclePath[10];
 	static BezierPath _BezierPath[12];
 	FishInfo _fishInfo;
 private:

@@ -6,7 +6,7 @@
       <ObjectData Name="Node" Tag="30" ctype="GameNodeObjectData">
         <Size X="0.0000" Y="0.0000" />
         <Children>
-          <AbstractNodeData Name="Panel_3" ActionTag="-1493889969" Tag="36" IconVisible="False" LeftMargin="-159.5000" RightMargin="-159.5000" TopMargin="-140.0000" BottomMargin="-140.0000" TouchEnable="True" ClipAble="False" BackColorAlpha="43" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
+          <AbstractNodeData Name="Panel_3" ActionTag="-1493889969" Tag="36" IconVisible="False" LeftMargin="-159.5000" RightMargin="-159.5000" TopMargin="-140.0000" BottomMargin="-140.0000" TouchEnable="True" ClipAble="False" BackColorAlpha="0" ComboBoxIndex="1" ColorAngle="90.0000" Scale9Width="1" Scale9Height="1" ctype="PanelObjectData">
             <Size X="319.0000" Y="280.0000" />
             <Children>
               <AbstractNodeData Name="background" ActionTag="2106909817" Tag="37" IconVisible="False" LeftMargin="78.2413" RightMargin="78.7587" TopMargin="44.2340" BottomMargin="22.7660" LeftEage="15" RightEage="15" TopEage="15" BottomEage="15" Scale9OriginX="15" Scale9OriginY="15" Scale9Width="132" Scale9Height="183" ctype="ImageViewObjectData">
@@ -67,7 +67,7 @@
                 <PreSize X="1.0000" Y="0.1643" />
                 <FileData Type="MarkedSubImage" Path="Game/Pic/boomb_title.png" Plist="Game/Game.plist" />
               </AbstractNodeData>
-              <AbstractNodeData Name="buyBtn" ActionTag="1952585129" Tag="42" IconVisible="False" LeftMargin="92.9995" RightMargin="95.0005" TopMargin="218.9227" BottomMargin="13.0773" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="101" Scale9Height="26" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
+              <AbstractNodeData Name="buyBtn" ActionTag="1952585129" Tag="42" IconVisible="False" LeftMargin="93.0047" RightMargin="94.9953" TopMargin="218.9221" BottomMargin="13.0779" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="101" Scale9Height="26" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
                 <Size X="131.0000" Y="48.0000" />
                 <AnchorPoint ScaleX="0.5307" ScaleY="0.5700" />
                 <Position X="162.5264" Y="40.4379" />

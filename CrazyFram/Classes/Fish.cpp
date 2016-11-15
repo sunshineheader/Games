@@ -25,9 +25,7 @@ DirPath Fish::_DirPath[10] =
 	{ Vec2(+894,  200), Vec2(-88, 333), },
 	{ Vec2(+904,  480), Vec2(-108, 104), },
 };
-CirclePath Fish::_CirclePath[10] =
-{
-};
+
 BezierPath Fish::_BezierPath[12] =
 {
 	// вСоб╫г ----->срио╫г

@@ -22,6 +22,18 @@ FishInfo FishLayer::_staicFishData[12] =
 };
 
 
+TaskData FishLayer::_taskData[6] =
+{
+	{ FishType(0),10, 0, 200 },
+	{ FishType(2),5, 0, 200 },
+	{ FishType(4),5, 0, 200 },
+	{ FishType(5),5, 0, 300 },
+	{ FishType(7),3, 0, 300 },
+	{ FishType(9),3, 0, 300 }
+};
+
+
+
 FishLayer* FishLayer::create(GameScene* scene)
 {
 	FishLayer* layer = new FishLayer();
@@ -62,10 +74,15 @@ void FishLayer::removeEvent()
 }
 void FishLayer::createFish()
 {
+	_isLignting = false;
+	_isTasking = false;
 	// 每秒随机游动
 	schedule(schedule_selector(FishLayer::createFishSigine),    1.0f, CC_REPEAT_FOREVER, 0.0f);
 	schedule(schedule_selector(FishLayer::createFishFormation), 20.0f, CC_REPEAT_FOREVER, 0.0f);
 	schedule(schedule_selector(FishLayer::createFishProps), 30.0f, CC_REPEAT_FOREVER, 0.0f);
+	createTask(10);
+	//schedule(schedule_selector(FishLayer::createTask), 180.0f, CC_REPEAT_FOREVER, 0.0f);
+
 }
 
 void FishLayer::createFishByType(int type)
@@ -106,7 +123,7 @@ void FishLayer::createFishFormation(float delta)
 {
 	int randnumber = cocos2d::random() % 10 + 2; // 正常的鱼
 	float randtime = cocos2d::rand_0_1() + 1.0f; 
-	_randFishType = cocos2d::random() % 5;
+	_randFishType = cocos2d::random() % 7;
 	_randFishWayType = cocos2d::random() % 12;
 	schedule(schedule_selector(FishLayer::createFishSigineFormation), randtime, randnumber, 0.0f);
 }
@@ -122,6 +139,12 @@ void  FishLayer::createFishSigineFormation(float delta)
 		addChild(fish);
 		fish->moveWithBezierPathByPathType(_randFishWayType); // 随机游动
 	}
+}
+
+void FishLayer::createTask(float delta)
+{
+	_data = _taskData[cocos2d::random() % 6];
+	_GameScene->getMenuLayer()->createTask(_data);
 }
 
 void FishLayer::createBulletAt(cocos2d::Vec2 location, int type)
@@ -141,8 +164,8 @@ void FishLayer::createBulletAt(cocos2d::Vec2 location, int type)
 }
 void FishLayer::createLightingAt(cocos2d::Vec2 location)
 {
-	Lightting*light = Lightting::create(this, location);
-	addChild(light);
+	_light = Lightting::create(this, location);
+	addChild(_light);
 }
 
 void FishLayer::createNetAt(cocos2d::Vec2 location, int type)
@@ -200,7 +223,16 @@ void FishLayer::checkOutCollision()
 }
 bool FishLayer::checkOutCollisionBetweenFishesAndBullet()
 {
-	if (!_bulletPool.empty()) {
+	if (_isLignting) {
+		for (auto iterFish = _fishPool.begin(); iterFish != _fishPool.end(); iterFish++) {
+			Fish* fish = (Fish*)(*iterFish);
+			if (!fish->isCatched() && fish->getCollisionRect().intersectsRect(_light->getCollisionRect())) {
+				fish->playDeadAnimation();
+				return false;
+			}
+		}
+	}
+	else if (!_bulletPool.empty()) {
 		for (auto iter = _bulletPool.begin(); iter != _bulletPool.end(); iter++) {
 			Bullet* bullet = (Bullet*)(*iter);
 			for (auto iterFish = _fishPool.begin(); iterFish != _fishPool.end(); iterFish++) {
@@ -215,6 +247,7 @@ bool FishLayer::checkOutCollisionBetweenFishesAndBullet()
 	}
 	return false;
 }
+
 void FishLayer::checkOutCollisionBetweenFishesAndFishingNet()
 {
 	if (!_netPool.empty()) {
@@ -232,6 +265,7 @@ void FishLayer::checkOutCollisionBetweenFishesAndFishingNet()
 
 void FishLayer::fishWillBeCatched(Fish* fish, Net* net)
 {
+	// Task
 	if (fish->getType() == FishType::FISH_TYPE_10) {
 		fish->playDeadAnimation();
 		PaymentLayer* layer = PaymentLayer::create(_GameScene, PayType(1));
@@ -242,9 +276,15 @@ void FishLayer::fishWillBeCatched(Fish* fish, Net* net)
 		PaymentLayer* layer = PaymentLayer::create(_GameScene, PayType(3));
 		_GameScene->addChild(layer);
 	}
-	else {
+	else if (fish->getType() == FishType::FISH_TYPE_09) {
+		return;
+	}
+	else{
 		if (GetFishHitRate(net->getType(), fish->getGoldByType())>= cocos2d::rand_0_1())
 		{
+			if (_isTasking && fish->getType() == _data.fishType) {
+				_GameScene->getMenuLayer()->getTask()->updateTask();
+			}
 			fish->playDeadAnimation();
 			_GameScene->getMenuLayer()->createGoldAt(false, fish->getPosition());
 		} 

@@ -12,14 +12,14 @@
               <AbstractNodeData Name="background" ActionTag="-1538943853" Tag="59" IconVisible="False" LeftMargin="6.7416" RightMargin="56.2584" TopMargin="6.4456" BottomMargin="5.5544" LeftEage="21" RightEage="21" TopEage="7" BottomEage="7" Scale9OriginX="21" Scale9OriginY="7" Scale9Width="22" Scale9Height="10" ctype="ImageViewObjectData">
                 <Size X="64.0000" Y="24.0000" />
                 <Children>
-                  <AbstractNodeData Name="fish_iocn" ActionTag="-479625708" Tag="60" IconVisible="False" LeftMargin="5.2637" RightMargin="12.7363" TopMargin="-10.7848" BottomMargin="-11.2152" Scale9Width="46" Scale9Height="46" ctype="ImageViewObjectData">
-                    <Size X="46.0000" Y="46.0000" />
+                  <AbstractNodeData Name="fish_iocn" ActionTag="-479625708" Tag="60" IconVisible="False" LeftMargin="16.7637" RightMargin="24.2363" TopMargin="0.7152" BottomMargin="0.2848" Scale9Width="46" Scale9Height="46" ctype="ImageViewObjectData">
+                    <Size X="23.0000" Y="23.0000" />
                     <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                     <Position X="28.2637" Y="11.7848" />
-                    <Scale ScaleX="0.4000" ScaleY="0.4000" />
+                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
                     <CColor A="255" R="255" G="255" B="255" />
                     <PrePosition X="0.4416" Y="0.4910" />
-                    <PreSize X="0.7188" Y="1.9167" />
+                    <PreSize X="0.3594" Y="0.9583" />
                     <FileData Type="Default" Path="Default/ImageFile.png" Plist="" />
                   </AbstractNodeData>
                 </Children>

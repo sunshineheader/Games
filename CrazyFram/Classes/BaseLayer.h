@@ -24,6 +24,8 @@ protected:
 	std::function<void()>_doEvent;
 	std::function<void()>_doUI;
 	std::function<void()>_removeEvent;
+public:
+	GameScene* GetGameScene(){ return _GameScene; };
 
 protected:
 	std::string RESOURCE_NAME;

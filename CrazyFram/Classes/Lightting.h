@@ -7,11 +7,12 @@ class Lightting :public BaseObject
 {
 public:
 	static Lightting* create(FishLayer* layer,cocos2d::Vec2 location);
+	cocos2d::Rect getCollisionRect();
+
 private:
 	bool init(FishLayer* layer, cocos2d::Vec2 location);
 	void initObject();
 	void destoryObject();
-	cocos2d::Rect getCollisionRect();
 	cocos2d::Action* lightingAnimation();
 	cocos2d::Action* lightingAction();
 private:

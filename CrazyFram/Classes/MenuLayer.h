@@ -1,6 +1,7 @@
 #ifndef __MENU__LAYER__H__H__
 #define __MENU__LAYER__H__H__
 #include "BaseLayer.h"
+#include "Task.h"
 
 class Cannon;
 class MenuLayer :public BaseLayer
@@ -19,7 +20,6 @@ private:
 	virtual void onTouchEnded(cocos2d::Touch*, cocos2d::Event*) override;
 	void removeTouchEvent();
 private: // cannon 
-	void createTask(float delta);
 	void createCannon();	// 创建的炮塔
 	bool checkCoin(); // 检查金币
 	void changeCannon();// 改变炮塔
@@ -33,11 +33,12 @@ private: // callbacks
 	void subButtonCallback(cocos2d::Ref* sender); // 减少
 	void setButtonCallback(cocos2d::Ref* sender); // 设置
 	void bmbButtonCallback(cocos2d::Ref* sender); // 炸弹
-
 public:
 	void refreshUI();
+	void createTask(TaskData data);
 	void setTouchedEnable(bool enable);
 	void createGoldAt(bool isArray,cocos2d::Vec2 location = cocos2d::Vec2::ZERO);
+	inline Task* getTask(){ return _task; };
 private:
 	Text* _levelText;
 	Text* _goldText;
@@ -47,6 +48,7 @@ private:
 
 private:
 	Cannon* _cannon;
+	Task* _task;
 	bool _touchEnable;
 
 };

@@ -42,3 +42,10 @@
 
 
 
+*.d
+CrazyFram/proj.android/obj/local/armeabi/objs/bullet_static/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.o.d
+*.apk
+*.d
+*.d
+*.d
+*.d

@@ -80,8 +80,6 @@ void MenuLayer::doUI()
 
 	createCannon();
 	addTouchEvent();
-	createTask(10);
-	// schedule(schedule_selector(MenuLayer::createTask), 180.0f, CC_REPEAT_FOREVER, 0.0f);
 
 	refreshUI();
 }
@@ -105,7 +103,6 @@ bool MenuLayer::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 	if (_touchEnable) {
 		if (_cannon->getType() == CannonType::CANNON_TYPE_07) {
 			this->cannonAimAt(touch->getLocation());
-			this->createLighting(touch->getLocation());
 		}
 		else {
 			if (this->checkCoin()) {
@@ -129,11 +126,11 @@ void MenuLayer::removeTouchEvent()
 {
 	this->getEventDispatcher()->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
 }
-void MenuLayer::createTask(float delta) {
+void MenuLayer::createTask(TaskData data) {
 
-	Task* task = Task::create(this);
-	task->setPosition(120, 360);
-	addChild(task);
+	_task = Task::create(this, data);
+	_task->setPosition(120, 360);
+	addChild(_task);
 }
 void MenuLayer::createCannon()
 {
@@ -189,15 +186,18 @@ void MenuLayer::changeCannon()
 
 void MenuLayer::cannonAimAt(cocos2d::Vec2 location)
 {
-	cocos2d::Vec2 cannonPos = _cannon->getPosition();
-	_cannon->cannonAimat(location);
 	// TOOD： 是否是激光类型
 	if (_cannon->getType() == CannonType::CANNON_TYPE_07 ){
 		this->createLighting(location);
+		_cannon->setType(CannonType(GameData::getInstance()->getCannonType()));
 	}else{
 		int type =_cannon->getType();
 		this->createBullet(location, type);
 	}
+
+	cocos2d::Vec2 cannonPos = _cannon->getPosition();
+	_cannon->cannonAimat(location);
+	_cannon->playCannonAnimation();
 }
 
 void MenuLayer::createBullet(cocos2d::Vec2 position, int type)
@@ -303,7 +303,7 @@ void MenuLayer::refreshUI()
 	int light = GameData::getInstance()->getLightLevelExp();
 	float percent = (light* 100.0f / 100.0f);
 	_lightLoadingBar->setPercent(percent);
-	if (percent == 100.0f) {
+	if ( percent == 100.0f) {
 		_cannon->setType(CannonType::CANNON_TYPE_07);
 		_lightLoadingBar->setPercent(0);
 		GameData::getInstance()->setLightLevelExp(0);

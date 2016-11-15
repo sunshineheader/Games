@@ -22,6 +22,7 @@ bool Lightting::init(FishLayer* layer, cocos2d::Vec2 location)
 	}
 	_fishLayer = layer;
 	_location = location;
+	_fishLayer->setLingtting(true);
 	this->_initObject = std::bind(&Lightting::initObject, this);
 	this->_destoryObject = std::bind(&Lightting::destoryObject, this);
 	return true;
@@ -37,13 +38,15 @@ void Lightting::initObject()
 	float radian = Vec2(distanceY, distanceX).getAngle();
 	float angle = CC_RADIANS_TO_DEGREES(radian);
 	this->setRotation(angle);
-	this->setScale(2,5);
+	this->setScale(5,5);
 	_lightSprite->runAction(this->lightingAnimation());
 	this->runAction(this->lightingAction());
 }
 
 void Lightting::destoryObject()
-{}
+{
+	_fishLayer->setLingtting(false);
+}
 
 cocos2d::Rect Lightting::getCollisionRect()
 {

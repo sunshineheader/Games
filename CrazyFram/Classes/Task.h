@@ -2,6 +2,7 @@
 #define __TASK__OBJECT__H__H__
 #include "BaseObject.h"
 #include "Fish.h"
+#include "CutDown.h"
 
 typedef struct {
 	FishType fishType;
@@ -14,15 +15,21 @@ class MenuLayer;
 class Task :public BaseObject
 {
 public:
-	static Task* create(MenuLayer* layer);
+	static Task* create(MenuLayer* layer, TaskData data);
+	void updateTask();
 private:
-	bool init(MenuLayer* layer);
+	bool init(MenuLayer* layer, TaskData data);
 	void initObject();
 	void destoryObject();
+	void update(float dt);
 private:
 	MenuLayer*_menuLayer;
 	bool _taskHasFinisheed;
-	static TaskData _taskData[6];
+
+	TaskData _curTask;
+	cocos2d::ui::Text* num;
+	ScheduleCountDown* time;
+
 
 };
 #endif
